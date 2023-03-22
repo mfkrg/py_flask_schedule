@@ -11,8 +11,7 @@ def schedule(group):
         return Response(png_image, mimetype='image/png')
     else:
         html_file = f'schedules/{group}.html'
-        css_file = f'schedules/timetable.css'
-        schedule_png_gen(html_file, group, css_file)
+        schedule_png_gen(html_file, group)
         png = get_cached_schedule(group)
         return Response(png, mimetype='image/png')
 
