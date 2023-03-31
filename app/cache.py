@@ -1,5 +1,8 @@
 import os
+import io
+import minio
 from conf import CACHE_FOLDER, HTML_FOLDER
+
 
 
 #check cache folder for the file
