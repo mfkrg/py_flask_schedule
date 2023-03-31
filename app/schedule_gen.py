@@ -20,8 +20,10 @@ def schedule_png_gen(html_file, group):
     driver.get('file://' + str(Path(html_file).resolve()))
 
     #Scrolling reads the required height and width for the screenshot
-    required_width = driver.execute_script('return document.body.parentNode.scrollWidth')
-    required_height = driver.execute_script('return document.body.parentNode.scrollHeight')
+    required_width = driver.execute_script('return document.body.scrollWidth')
+    required_height = driver.execute_script('return document.body.scrollHeight')
+    print(required_width)
+    print(required_height)
     driver.set_window_size(required_width, required_height)
 
     #cut off the .html extension and save in cache folder
