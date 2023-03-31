@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.chrome.options import Options
 import logging
 
 def schedule_png_gen(html_file, group):
@@ -9,10 +9,14 @@ def schedule_png_gen(html_file, group):
     file_name = f'{group}.html'
 
     #Headless mode for selenium web driver
-    options = Options()
-    options.add_argument('--headless')
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
 
-    driver = webdriver.Firefox(options=options)
+    chromedriver_path = '/path/to/chromedriver'
+    driver = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+
     driver.get('file://' + str(Path(html_file).resolve()))
 
     #Scrolling reads the required height and width for the screenshot
@@ -24,4 +28,5 @@ def schedule_png_gen(html_file, group):
     filename_without_extension = os.path.splitext(file_name)[0]
     driver.save_screenshot(f'cache/{filename_without_extension}' + '.png')
     driver.quit()
+    logging.debug(f'Schedule generated successfully. Requeted - {group}')
     return 0
